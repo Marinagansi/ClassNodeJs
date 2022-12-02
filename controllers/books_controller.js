@@ -12,7 +12,13 @@ const getAllBooks=(req, res)=>{
 }
 
 const createBook=(req, res)=>{
-    Book.create(req.body)
+let abook={
+    'title':req.body.title,
+    'author':req.body.author
+
+}
+
+    Book.create(abook)
         .then((book)=>{
             res.status(201).json(book)
         }).catch((err)=>console.log(err))
