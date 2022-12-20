@@ -3,3 +3,6 @@ web shocket
 title
 introduction-
 client and user
+
+npm init -y
+npm install express`        
