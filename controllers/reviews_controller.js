@@ -10,6 +10,7 @@ const createReviews=(req, res, next)=>{
     .then((book)=>{
         console.log(req.body)
         console.log(req.user)
+        //to have reviewer id as well as 
         let data={
             body:req.body.body,
             reviewer: req.user.userId
@@ -43,31 +44,38 @@ const getReviewById=(req, res, next)=>{
 
 const updateReviewById=(req, res, next)=>{
     Book.findById(req.params.id)
-
-
     .then((book)=>{
-        console.log(req.user)
+        let review=book.reviews.id(req.params.review_id)
+        if(review.reviewer!=req.user.userId){
+            res.status(403)
+            return next(new Error('not authorized'))
+        }
         let updatedReviews=book.reviews.map((item)=>{
-            if (item.id==req.params.review_id || item.reviewer==req.user  ){
-                item.body=req.body.body
-                
+            if (item.id==req.params.review_id   ){
+                if( item.reviewer==req.user.userId){
+                    item.body=req.body.body
+                }
             }
             return item
         })
-         
         book.reviews=updatedReviews
         book.save().then(b=>res.json(b.reviews))
-        
-        
     }).catch(next)
 }
 
-
 const deleteAReview=(req, res, next)=>{
     Book.findById(req.params.id)
+    
     .then((book)=>{
+        let review=book.reviews.id(req.params.review_id)
+        if(review.reviewer!=req.user.userId){
+            res.status(403)
+            return next(new Error('not authorized'))
+        }
         let Reviews=book.reviews.filter((item)=>{
-            return item.id!=req.params.review_id
+            if(item.reviewer==req.user.userId){
+                return item.id!=req.params.review_id   
+            }
         })
         book.reviews=Reviews
         book.save().then(b=>res.json(b.reviews))
