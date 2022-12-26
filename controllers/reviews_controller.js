@@ -8,9 +8,16 @@ const getAllReviews=(req, res, next)=>{
 const createReviews=(req, res, next)=>{
     Book.findById(req.params.id)
     .then((book)=>{
-    book
-    .reviews.push(req.body)
+        console.log(req.body)
+        console.log(req.user)
+        let data={
+            body:req.body.body,
+            reviewer: req.user.userId
+        }
+
+    book.reviews.push(data)
     book.save().then((b)=>res.status(201).json(b.reviews))
+
     }).catch(next)
     
 }
@@ -36,10 +43,14 @@ const getReviewById=(req, res, next)=>{
 
 const updateReviewById=(req, res, next)=>{
     Book.findById(req.params.id)
+
+
     .then((book)=>{
+        console.log(req.user)
         let updatedReviews=book.reviews.map((item)=>{
-            if (item.id==req.params.review_id){
+            if (item.id==req.params.review_id || item.reviewer==req.user  ){
                 item.body=req.body.body
+                
             }
             return item
         })

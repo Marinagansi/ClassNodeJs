@@ -9,7 +9,12 @@ const userSchema=mongoose.Schema({
     },
     password:{
         type:String,
-        required:true,
+        required:true,  
+    },
+    role: {
+        type: String,
+        enum:['Admin','User'],
+        default:'User'
     }
 },{timestamps:true})
 module.exports=mongoose.model('User',userSchema)
