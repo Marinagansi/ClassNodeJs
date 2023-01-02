@@ -9,6 +9,7 @@ const book_routes=require('./routes/books-route')
 const category_routes=require('./routes/category-routes')
 const auth=require('./middleware/auth')
 const users_routes=require('./routes/user-route')
+const profile_routes=require('./routes/profile-route')
 
 mongoose.connect('mongodb://127.0.0.1:27017/books')
     .then(()=>{
@@ -38,9 +39,11 @@ app.get('^/$|/index(.html)?',(req,res)=>{
 
 //3.Router level middleware
 app.use('/users',users_routes)
-//app.use(auth.verifyUser)
+// app.use(auth.verifyUser)
+app.use('/profile',auth.verifyUser, profile_routes)
 app.use('/books',book_routes)
 app.use('/category', category_routes)
+
 
 
 //4.error handle middleware

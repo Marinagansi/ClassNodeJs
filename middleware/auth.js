@@ -13,8 +13,6 @@ const verifyUser = (req, res, next) => {
         req.user = decoded
         next()
     })
-
-
 }
 const VerifyAdmin = (req, res, next) => {
     if(req.user.role != 'Admin'){

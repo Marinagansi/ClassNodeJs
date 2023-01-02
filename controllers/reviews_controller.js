@@ -10,7 +10,7 @@ const createReviews=(req, res, next)=>{
     .then((book)=>{
         console.log(req.body)
         console.log(req.user)
-        //to have reviewer id as well as 
+        //to have reviewer id as well 
         let data={
             body:req.body.body,
             reviewer: req.user.userId
