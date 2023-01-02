@@ -30,3 +30,4 @@ router.route('/:id/reviews/:review_id')
     .post((req, res)=>res.status(501).json({'reply':'not implemented'}))
     .delete(verifyUser,reviewController.deleteAReview)
 module.exports=router
+rou
