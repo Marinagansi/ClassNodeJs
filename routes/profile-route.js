@@ -11,6 +11,7 @@ router.route('/')
    }).catch(next)
 })
 .post(upload.single('profile'),(req,res,next)=>{
+   
     let profile={
         ...req.body,
         image:req.file.filename,
