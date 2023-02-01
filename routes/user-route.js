@@ -70,4 +70,17 @@ router.post('/login',(req, res, next)=>{
 
 })
 
+router.put('/updateById',(req,res,next)=>{
+        if(req.body.password){
+            req.body.password=bcrypt.hash(req.body.password,10,(err,hash)=>{
+                if(err)return next(err)
+                req.body.password=hash
+                User.findByIdAndUpdate(req.params.id,{$set:req.body},{new:true})
+                .then((user)=>{
+                    res.json(user)
+                }).catch(next)
+            })
+        }
+})
+
 module.exports=router

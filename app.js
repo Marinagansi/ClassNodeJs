@@ -1,9 +1,11 @@
 require('dotenv').config()
+const cors=require('cors')
 const express= require('express')
 const app=express()
+app.use(cors())
 const logger=require('./logger')
 const mongoose=require('mongoose')
-const port=3000
+const port=3005
 const path=require('path')
 const book_routes=require('./routes/books-route')
 const category_routes=require('./routes/category-routes')

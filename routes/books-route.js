@@ -10,7 +10,7 @@ router.route('/')
     .put(bookController.putBook)
     .delete(verifyUser, VerifyAdmin,bookController.deleteBook)
 
-router.use(verifyUser).route('/:id')
+router.use(verifyUser).route('/:id') 
     .get(bookController.getBookById)
     .put(bookController.UpdateABookById)
     .delete(bookController.DeleteABookById)
